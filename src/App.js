@@ -31,14 +31,19 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Steve Jobs Chat App</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Message:
-          <textarea value={message} onChange={handleChange} />
-        </label>
+        <div>
+          <textarea
+          value={message}
+          placeholder="Ask Steve anything"
+          onChange={handleChange}
+          />
+        </div>
         <input type="submit" value="Submit" />
       </form>
-      <div>{response}</div>
+      <br />
+      {response && <div><b>Steve: </b>{response}</div>}
     </div>
   );
 }

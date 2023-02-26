@@ -22,20 +22,28 @@ app.use(cors());
 
 app.post('/', async (req, res) => {
     const { message } = req.body;
+    let engineeredPrompt = "Pretend you are Steve Jobs. Answer with motivational content.\n\n" 
+    + "Steve: How can I help you today?\n" 
+    + "Person: I want some motivation.\n" 
+    + "Steve: You are amazing, you can create any type of business you want.\n" 
+    + `Person: ${message}\n`
+    + "Steve: "
+    console.log(engineeredPrompt, '\n')
+
     const response = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: `${message}`,
-        max_tokens: 7,
+        prompt: engineeredPrompt,
+        max_tokens: 100,
         temperature: 0,
       });
       
     console.log(response.data);
 
     if (response.data && response.data.choices) {
-        res.json({ message: response.data.choices[0].text });
+        res.json({ message: response.data.choices[0].text.trim() });
     }
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port http://localhost:${port}`);
+    console.log(`Example app listening on port http://localhost:${port}\n`);
 });
